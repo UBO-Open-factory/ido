@@ -3,29 +3,30 @@
  *          OBJECTIF:
  *          
  * Ce programe a pour but d'etablire une connection HTTPS
- *  il ajoute donc au programe 1.06 toutes :
+ *  il ajoute donc au programe 06 :
  *    *une procedure de commande AT
  *    *traitmeent des donnée retouner par le fona  
  *    *ajout de la posibiliter de verifier le niveau de la battrie
  *    
  * ------------------------------------------------------------------
- *          NOTE : ADAPTATION DU PIN MAPPING A FAIRE
+ *          NOTE :
  * 
- *  Ce programme n'utilise pas le mapping définitif du Data logger pour 
- *  la liaison série avec le module GSM. 
- *  Elle utilise un port série matériel (HardwareSerail). 
- *  Dans le Data logger cette liaison sera fournie par un module:
- *    *I²C vers 2xUART.
+ *  Ce programme utilise un port série matériel (HardwareSerail). 
  *  
- *  Les autres broches utilisées (Key, PS et NS)  correspondent au 
- *  brochage définitif du Data logger.
- * 
+ *  Key : permet de commante l'arret/marche du module FONA
+ *  PS* : Controle de l'état du module FONA (on/ff [1/0])
+ *  
+ *        MAJ firmware module FONA
+ * Nécessaire si vous avez besoin de faire du HTTPS
+ * pour verifier vore version de firmeware :
+ * AT+CGMR returne la version du firmware
+
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
  * 
  * liste de commande AT pour GSM :
  * https://www.technologuepro.com/gsm/commande_at.htm
  * 
- * Le module FONA utilisé ne les reconnait pas toutes
+ * Le module FONA utilisé ne les reconnait pas toutes reférévous au DATASHEET de VOTRE module GSM/GPRS
  * 
  * ------------------------------------------------------------------
  * 
@@ -40,9 +41,6 @@
  *     PS     IO39 (A1)
  *     Rx     Tx IO15  (A4)
  *     Tx     Rx IO35  (A3)
- *     
- *     Batterie branchée directement sur le connecteur spécifique JST2
- *     ??message(sms) gsm si battrie faible??
  *     
  * ------------------------------------------------------------------
  * 
@@ -128,10 +126,6 @@ struct operateur {
     String id;        // identifiant international 
 };
 String id_operateur_choisi=""; // sera renseigné par la procédure commande_get_COPS
-
-/**adresse Web TOCIO, IP : [ 195.83.247.151 ]**/
-const String host = "uboopenfactory.univ-brest.fr/cad/saloum/backoffice";
-const String url  = "/cad/saloum/backoffice/mesure/add/FONA_UOF_1";
 
 /** compteur **/
 unsigned long debut=0;
@@ -501,7 +495,7 @@ bool commande_GPRS(bool fct,String *pCID){
 
     if (flag_GPRS == true) {//AT+SAPBR=3,1,”APN”,”free”; OK  Configure le réseau APN(nom du point d'accé)
       flag_GPRS == false;
-      gsm_serial_send("AT+SAPBR=3,1,\"APN\",\"sl2sfr\"");
+      gsm_serial_send("AT+SAPBR=3,1,\"APN\",\"sl2sfr\"");//sl2SFR EST l'APN de SFR a remplace par celui de VOTRE opérateur
       cptr=0;
       while (true) {
         str=attend_reponse_GSM(10000);     
@@ -613,7 +607,7 @@ bool commande_GPRS(bool fct,String *pCID){
           }
         }
       }
-  
+
     if (flag_GPRS == true) {//AT+FTPCID?; FTP Bearer Profile Identifier = CID;
         flag_GPRS == false;
         gsm_serial_send("AT+FTPCID?");
@@ -642,7 +636,7 @@ bool commande_GPRS(bool fct,String *pCID){
         }
       }
 
-/*    if (flag_GPRS == true) {//AT+HTTPSSL?; return état SLL "0" ou "1"
+    if (flag_GPRS == true) {//AT+HTTPSSL?; return état SLL "0" ou "1"
         flag_GPRS == false;
         gsm_serial_send("AT+HTTPSSL?");
         cptr=0;
@@ -664,10 +658,8 @@ bool commande_GPRS(bool fct,String *pCID){
           }
         }
     }
-*/
 
-/*    if (flag_GPRS == true) {//AT+HTTPSSL=1; activation HTTPS; AT+HTTPSSL=<n> ; n=0 Disable, n=1 Enable
- *     
+    if (flag_GPRS == true) {//AT+HTTPSSL=1; activation HTTPS; AT+HTTPSSL=<n> ; n=0 Disable, n=1 Enable   
         flag_GPRS == false;
         gsm_serial_send("AT+HTTPSSL=1");
         cptr=0;
@@ -689,7 +681,6 @@ bool commande_GPRS(bool fct,String *pCID){
           }
         }
     }
-*/
 
     if (flag_GPRS == true) {//"AT+HTTPPARA=\""+*pCID+"\",1"
         flag_GPRS == false;
@@ -714,7 +705,7 @@ bool commande_GPRS(bool fct,String *pCID){
 
     if (flag_GPRS == true) {//AT+HTTPPARA=”URL”,””  OK  Configure l’adresse URL
       flag_GPRS == false;
-      gsm_serial_send("AT+HTTPPARA=\"URL\",\" http://marchytronic.fr/Saloum\"");
+      gsm_serial_send("AT+HTTPPARA=\"URL\",\" Votre URL\"");
       cptr=0;
       while (true) {
         str=attend_reponse_GSM(10000);
@@ -762,7 +753,7 @@ bool commande_GPRS(bool fct,String *pCID){
       }
     }
 
-/*    if (flag_GPRS == true) {//AT+HTTPREAD ;Read the HTTP Server Response; +HTTPREAD :<date_len>,<data>  Lis les données DATA du serveur http
+    if (flag_GPRS == true) {//AT+HTTPREAD ;Read the HTTP Server Response; +HTTPREAD :<date_len>,<data>  Lis les données DATA du serveur http
       flag_GPRS == false;
       gsm_serial_send("AT+HTTPREAD");
       cptr=0;
@@ -784,9 +775,8 @@ bool commande_GPRS(bool fct,String *pCID){
         }
       }
     }
-*/
 
-/*    if (flag_GPRS == true) {//AT+CIFSR    get local IP address
+    if (flag_GPRS == true) {//AT+CIFSR    get local IP address
       flag_GPRS == false;
       gsm_serial_send("AT+CIFSR");
       cptr=0;
@@ -806,9 +796,8 @@ bool commande_GPRS(bool fct,String *pCID){
         }
       }
     }
-*/
 
-/*    if (flag_GPRS == true) {//AT+HTTPTERM; Terminate HTTP Service; return ok si connection HTTP close
+    if (flag_GPRS == true) {//AT+HTTPTERM; Terminate HTTP Service; return ok si connection HTTP close
       flag_GPRS == false;
       gsm_serial_send("AT+HTTPTERM");
       cptr=0;
@@ -828,72 +817,8 @@ bool commande_GPRS(bool fct,String *pCID){
         }
       }
     }
-*/
-
-/**       info / a programer 
- *   voir pour fiare en FTP due un un pob de maj du firmware du FONA
- * AT+CDNSGIP = "marchytronic.fr" Query the IP Address of Given Domain Name
- * AT+CDNSCFG ="xxx.xxx.xxx.xxx","xxx.xxx.xxx.xxx" Configure Domain Name Server
- * 2/3 info commande httppara (dans l'exemple) https://www.microchip.com/forums/m1109499.aspx
- * 
- * 
- * 
- * //AT+CIPSSL=<n> ;TCP SSL
- * 
- * 
- */
   }
 }
-
-/** Si besoin liste de commande AT :
- *  
- *  gsm_serial_send("AT+HTTPINIT"); //return ok
- *  gsm_serial_send("AT+HTTPSTATUS?");//return GET,0,0,0
- *  gsm_serial_send("AT+HTTPPARA=\"URL\",\"http://marchytronic.fr/Saloum/"); // pas encore tester
- *  gsm_serial_send("AT+SAPBR=2,1");
- *  AT+HTTPACTION=<Method> peut-étre besoin
- *  AT+HTTPSTATUS? return : +HTTPSTATUS: GET,0,0,0 [methode,status,finish,remain]
- *                                                  GET,0=idel,0=transmited,0=sent/received
- *  AT+CGDCONT? return : +CGDCONT: <cid>,<PDP_type>,<APN>,<PDP_addr>,<data_comp>,<head_comp> 
- *  [<CR><LF>+CGDCONT: <cid>,<PDP_type>,<APN>,<PDP_addr>,<data_comp>,<head_comp> […]]
- *  
- * AT+COPN : liste des opérateurs enregistrés dans la mémoire (EEPROM) du module GSM
- * AT+CREG? Network Registration status
- * AT+CGATT=? +CGATT :  repond (0,1)= aux deux que peut retourner la commande
- * AT+CGATT?  +CGATT :  repond 0 si non connecter, repond 1 si connecter
- * 
- * pour le ssl actualiser le firmware du FONA pour enagle la commande d'activation du HTTPS
- * 
- * AT+SAPBR=3,1,”CONTYPE”,”GPRS” OK  Configure le profil 1, type de connexion internet : GPRS
- * AT+SAPBR=3,1,”APN”,”free” OK  Configure le réseau APN
- * AT+SAPBR=1,1  OK  Tentative de connexion GPRS
- * AT+HTTPINIT OK  Initialisation
- * AT+HTTPPARA=”CID”,1 OK  Configuration http
- * AT+HTTPPARA=”URL”,””  OK  Configure l’adresse URL
- * AT+HTTPACTION=0 OK  Lance la session
- * AT+HTTPREAD +HTTPREAD :<date_len>,  Lis les données DATA du serveur http
- * AT+HTTPTERM OK  Fin
- * AT+CIFSR    Retourne l’adresse IP
- * 
- * 
- * //////////////////////////////////////////
- *        MAJ firmware
- * AT+CGMR returne la version du firmware
- * //////////////////////////////////////////
- * Fichier en FTP a test si le principal est fait(envoie sur TOCIO)
- * 
- *        **** NV_Procedure ****
- * AT+CIPSHUT
- * AT+cgatt
- * AT+SAPBR 3.1
- * AT+SAPBR 3.1
- * AT+CSTT = opérateur
- * AT+SAPBR 1,1
- * 
- * 
- * 
-*/
-
 /******************************************************************************
  * 
  * 
