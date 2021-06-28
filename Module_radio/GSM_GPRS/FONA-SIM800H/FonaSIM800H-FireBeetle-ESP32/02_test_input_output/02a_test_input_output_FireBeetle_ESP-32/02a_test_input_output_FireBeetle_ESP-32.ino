@@ -1,13 +1,13 @@
 /**
  * --------------------------------------------------
- *                 04_test_input_output
+ *                 02a_test_input_output
  *                 
  * - Ce programe est un test intermédiaire des port 
  * Serie, A noter que le loop back ne foncttione pas avec les:
  *        - SoftwareSerial (Emulation de port serie)
  *        - HardwareSerial (Relocalisation de port serie)
  * D'ou lutilisation d'une arsuino Uno pour recevoir et
- * renvoyer les information qu passe sur les port serie.
+ * renvoyer les information qui passe sur les port serie.
  * Ce dernier a également été utiliser 
  * pour tester les entré sortie du FireBeetle.
  * 
@@ -21,8 +21,7 @@
  *                   Test laison Serie : FireBeetle <-> Fona
  *                    
  * ------------------------------------------------------------------         
- * NOTE : !TEST EFFECTUER SANS CARTE SIM DANS LE MODULE Fona!
- * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+ * NOTE :
  * Ce programe permet de vérifier en mettant dans le champs de saisie 
  * du moniteur serie les commande AT tel que AT qui renvoie ok ou
  * d'autre commande permetant de récupérer des information du Fona

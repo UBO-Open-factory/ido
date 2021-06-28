@@ -1,6 +1,6 @@
 /*
  * --------------------------------------------------
- *                 04_test_input_output_Arduino_Uno
+ *                 02b_test_input_output_Arduino_Uno
  *                 
  * - Ce programe est la 2éme partie du test a implanter dans l'arduino Uno
  *   permetant de lire et renvoyer les donnée present sur le port serie.

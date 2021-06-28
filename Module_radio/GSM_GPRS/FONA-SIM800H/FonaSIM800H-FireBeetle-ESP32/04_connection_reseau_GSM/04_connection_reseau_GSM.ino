@@ -1,7 +1,7 @@
 /**
  * ------------------------------------------------------------------
  * 
- *                        06_connection_reseau_GSM
+ *                        04_connection_reseau_GSM
  *                        
  * - Ce programe a pour objectif d'ajouter au programe precedent une
  *  commande de connection au réseau GSM et de verification de la 
@@ -13,9 +13,7 @@
  * 
  * - licence d'utilisation : CC-BY-SA
  * ------------------------------------------------------------------         
- * NOTE : !TEST EFFECTUER SANS CARTE SIM DANS LE MODULE Fona!
- *        !Le PinMapping ne corespond pas a ça version final!
- * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+ * NOTE :
  * Ce programe permet de vérifier en mettant dans le champs de saisie 
  * du moniteur serie les commande AT tel que AT qui renvoie ok ou
  * d'autre commande permetant de récupérer des information du Fona

@@ -1,10 +1,10 @@
 /**
  * ------------------------------------------------------------------
  * 
- *                        07_connection_reseau_GSM_automatiser
+ *                        05_connection_reseau_GSM_automatiser
  * 
  * - Ce programe a pour objectif d'automatiser la procedure precedente de 
- *  connection au reseau GSM.
+ *  marche->connection->arret au reseau GSM toutes les 5 second.
  *    
  * - By Laurent Marchal & Arthur Pignalet
  * 
@@ -12,11 +12,9 @@
  * 
  * - licence d'utilisation : CC-BY-SA
  * ------------------------------------------------------------------         
- * NOTE : !TEST EFFECTUER SANS CARTE SIM DANS LE MODULE Fona!
- *        !Le PinMapping ne corespond pas a ça version final!
- * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+ * NOTE : 
  * Ce programe permet de vérifier en mettant dans le champs de saisie 
- * du moniteur serie les commande AT tel que AT qui renvoie ok ou
+ * du moniteur serie les commande AT tel que "AT" qui renvoie ok ou
  * d'autre commande permetant de récupérer des information du Fona
  * 
  * liste de commande AT: LIEN : 
@@ -140,9 +138,6 @@ void setup() {
   
   // initialisation de la lecture du Power Status
   pinMode (GSM_PS, INPUT);
-  
-  //initialisation de la lecture du Net Status
-  pinMode(GSM_NS, INPUT);
     
   Serial.println("");
   Serial.println("----------------------------------");
