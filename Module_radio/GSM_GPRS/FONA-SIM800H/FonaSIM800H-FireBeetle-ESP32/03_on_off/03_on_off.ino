@@ -1,7 +1,7 @@
 /**
  * ------------------------------------------------------------------
  * 
- *                        05_ON_OFF
+ *                        03_ON_OFF
  *                        
   * - Ce programe a pour objectif de tester une commande
  *    manuel de marche/arret du module FONA MniGSM via 
@@ -13,10 +13,7 @@
  * 
  * - licence d'utilisation : CC-BY-SA 
  * ------------------------------------------------------------------         
- * NOTE : !TEST EFFECTUER SANS CARTE SIM DANS LE MODULE Fona!
- *        !Le PinMapping ne corespond pas a ça version final!
- * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
- * 
+ * NOTE : 
  * Ce programe permet de vérifier en mettant dans le champs de saisie 
  * du moniteur serie les commande AT tel que AT qui renvoie ok ou
  * d'autre commande permetant de récupérer des information du Fona
@@ -28,7 +25,7 @@
  * 
  *                        UART_Mapping FireBeetle
  * 
- * ATTENTION! n'utiliser que les UART dit "libre"
+ * ATTENTION!!! n'utiliser que les UART du tableau ci desous dit "libre":
  * 
  * #define UART0   0 // (rx) serial 0  utiliser pour la programation
  * #define UART0   1 // (tx) serial 0  utiliser pour la programation

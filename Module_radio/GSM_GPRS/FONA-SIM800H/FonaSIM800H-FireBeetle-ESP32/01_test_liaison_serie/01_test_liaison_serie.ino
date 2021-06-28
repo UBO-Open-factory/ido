@@ -1,7 +1,7 @@
 /**
  *
  * --------------------------------------------------
- *                 03_test_liaison_serie
+ *                 01_test_liaison_serie
  *                 
  * - Ce programe est un test intermédiaire du port 
  * Serial2. Ce dernier a également été utiliser 
