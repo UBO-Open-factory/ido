@@ -1,5 +1,7 @@
 # GSM/GPRS
 
-entéte
+Répertoire GSM/GPRS module de comunication sms/internet
 
-####FONA_SIM800H
+## Module :
+    - FONA_SIM800H
+
